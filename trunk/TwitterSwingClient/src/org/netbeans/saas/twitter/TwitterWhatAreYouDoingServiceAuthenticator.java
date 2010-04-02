@@ -25,6 +25,8 @@ public class TwitterWhatAreYouDoingServiceAuthenticator extends Authenticator {
     
     static {
         try {
+            //username = null;
+            //password = null;
             Properties props = new Properties();
             props.load(TwitterWhatAreYouDoingServiceAuthenticator.class.getResourceAsStream(PROP_FILE));
             username = props.getProperty("username");
@@ -37,12 +39,20 @@ public class TwitterWhatAreYouDoingServiceAuthenticator extends Authenticator {
     private static TwitterWhatAreYouDoingServiceAuthenticator singleton = new TwitterWhatAreYouDoingServiceAuthenticator();
     
     public static void login() throws IOException {
+
+        //System.out.println( username );
+        //System.out.println( password);
+
         if (!isValidUsernamePassword()) {
             AuthDialog dlg = new AuthDialog(null, true);
+            System.out.println( "username = " + dlg.getUserName());
+            System.out.println( "password = " + dlg.getPassword());
             if (1 == dlg.getStatus()) {
+                
                 username = dlg.getUserName();
                 password = dlg.getPassword();
-            }
+            } 
+
             if (!isValidUsernamePassword()) {
                 throw new IOException("Invalid username and password");
             }

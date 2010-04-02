@@ -128,7 +128,7 @@ public class TwitterJFrame extends javax.swing.JFrame {
     }
 
     /**
-     * 
+     * Initializing user information
      */
     private void initUserInfo() {
 
