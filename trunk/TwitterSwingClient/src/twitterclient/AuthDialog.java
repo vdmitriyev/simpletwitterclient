@@ -25,6 +25,8 @@ public class AuthDialog extends javax.swing.JDialog {
     public AuthDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        //this.setLocationRelativeTo(getRootPane());
+        this.setLocationRelativeTo(null);
         this.setVisible(modal);
     }
 
@@ -45,6 +47,7 @@ public class AuthDialog extends javax.swing.JDialog {
         jButtonOK = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Simple twitter client : LOGIN/PASSWORD");
 
         jLabel1.setText("User Name:");
 
@@ -82,7 +85,7 @@ public class AuthDialog extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jButtonOK, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButtonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(

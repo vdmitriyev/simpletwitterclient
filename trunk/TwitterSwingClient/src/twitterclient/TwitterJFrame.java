@@ -10,6 +10,7 @@
  */
 package twitterclient;
 
+import java.awt.Color;
 import java.net.URL;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -29,14 +30,17 @@ import twitterclient.utils.*;
 public class TwitterJFrame extends javax.swing.JFrame {
 
     private DefaultListModel statuses = new DefaultListModel();
+    private final int MAX_INPUT_LENGTH  = 140;
 
     /** Creates new form TwitterJFrame */
     public TwitterJFrame() {
 
+        this.setLocationRelativeTo(null);
+     
         initComponents();
         //setProxy();
         initUserInfo();
-        getTwitsFromTwitter();
+        getTwitsFromTwitter();        
     }
 
     /** This method is called from within the constructor to
@@ -48,49 +52,88 @@ public class TwitterJFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        jButtonUpdate = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldStatus = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
+        jLabelTextLength = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Simple twitter RESTfull client");
-        setMinimumSize(new java.awt.Dimension(48, 48));
+        setResizable(false);
 
-        jButton1.setText("Update");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-
+        jButtonUpdate.setText("Update");
+        jButtonUpdate.setName("btnUpdate"); // NOI18N
+        jButtonUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonUpdateActionPerformed(evt);
             }
         });
 
-        jLabel1.setLabelFor(jTextField1);
+        jLabel1.setLabelFor(jTextFieldStatus);
         jLabel1.setText("Icon");
         jLabel1.setPreferredSize(new java.awt.Dimension(48, 48));
 
-        jTextField1.setText("Status");
+        jTextFieldStatus.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        jTextFieldStatus.setText("Status");
+        jTextFieldStatus.setNextFocusableComponent(jButtonUpdate);
+        jTextFieldStatus.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldStatusKeyTyped(evt);
+            }
+        });
 
         jList1.setModel(statuses);
         jList1.setCellRenderer(new Item());
         jScrollPane1.setViewportView(jList1);
 
+        jLabelTextLength.setForeground(new java.awt.Color(0, 0, 204));
+        jLabelTextLength.setText("140");
+        jLabelTextLength.setName("lblTextCount"); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup().addContainerGap().addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING).addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE).addGroup(layout.createSequentialGroup().addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(jButton1))).addContainerGap()));
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldStatus, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelTextLength, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonUpdate))))
+                .addContainerGap())
+        );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup().addGap(21, 21, 21).addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(jButton1)).addContainerGap()));
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldStatus, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabelTextLength, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonUpdate)))
+                .addContainerGap())
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpdateActionPerformed
 
         try {
 
-            String status = jTextField1.getText().trim();
+            String status = jTextFieldStatus.getText().trim();
             String inReplyToStatusId = null;
             String format1 = "xml";
 
@@ -106,7 +149,20 @@ public class TwitterJFrame extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonUpdateActionPerformed
+    
+    private void jTextFieldStatusKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldStatusKeyTyped
+
+        jLabelTextLength.setText(String.valueOf(MAX_INPUT_LENGTH-jTextFieldStatus.getText().length()));
+        if (  (MAX_INPUT_LENGTH - jTextFieldStatus.getText().length()) < 0 ) {            
+            jLabelTextLength.setForeground(new java.awt.Color(204, 0, 0));
+            jButtonUpdate.setEnabled(false);
+        } else {
+            jLabelTextLength.setForeground(new java.awt.Color(0, 0, 204));
+            jButtonUpdate.setEnabled(true);
+        }
+        
+    }//GEN-LAST:event_jTextFieldStatusKeyTyped
 
     /**
      *
@@ -151,7 +207,7 @@ public class TwitterJFrame extends javax.swing.JFrame {
                 twitter.whatareyoudoingservice.twitterresponse.Statuses resultObj = result.getDataAsObject(twitter.whatareyoudoingservice.twitterresponse.Statuses.class);
 
                 StatusType st = resultObj.getStatus().get(0);
-                jTextField1.setText(st.getText().trim());
+                jTextFieldStatus.setText(st.getText().trim());
                 UserType user = st.getUser();
                 String iconSrc = user.getProfileImageUrl();
                 URL iconUrl = new URL(iconSrc);
@@ -226,11 +282,14 @@ public class TwitterJFrame extends javax.swing.JFrame {
             }
         });
     }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonUpdate;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabelTextLength;
     private javax.swing.JList jList1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextFieldStatus;
     // End of variables declaration//GEN-END:variables
 }
