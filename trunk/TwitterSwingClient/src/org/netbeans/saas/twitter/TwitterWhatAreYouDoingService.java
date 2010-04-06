@@ -92,4 +92,37 @@ public class TwitterWhatAreYouDoingService {
         sleep(1000);
         return conn.get(null);
     }
+
+    /**
+     *
+     * @param lite
+     * @param page
+     * @param format
+     * @return an instance of RestResponse
+     */
+    public static RestResponse getFollowersStatuses(String lite, String page, String format) throws IOException {
+        TwitterWhatAreYouDoingServiceAuthenticator.login();
+        String[][] pathParams = new String[][]{{"{format}", format}};
+        String[][] queryParams = new String[][]{{"lite", lite}, {"page", page}};
+        RestConnection conn = new RestConnection("http://twitter.com/statuses/followers.{format}", pathParams, queryParams);
+        sleep(1000);
+        return conn.get(null);
+    }
+
+    /**
+     *
+     * @param since
+     * @param sinceId
+     * @param page
+     * @param format
+     * @return an instance of RestResponse
+     */
+    public static RestResponse getReplies(String since, String sinceId, String page, String format) throws IOException {
+        TwitterWhatAreYouDoingServiceAuthenticator.login();
+        String[][] pathParams = new String[][]{{"{format}", format}};
+        String[][] queryParams = new String[][]{{"since", since}, {"since_id", sinceId}, {"page", page}};
+        RestConnection conn = new RestConnection("http://twitter.com/statuses/replies.{format}", pathParams, queryParams);
+        sleep(1000);
+        return conn.get(null);
+    }
 }
