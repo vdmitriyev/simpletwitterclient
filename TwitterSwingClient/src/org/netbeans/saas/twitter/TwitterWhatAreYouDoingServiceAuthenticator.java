@@ -11,6 +11,7 @@ import java.net.PasswordAuthentication;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import twitterclient.AuthDialog;
 
 /**
@@ -25,8 +26,6 @@ public class TwitterWhatAreYouDoingServiceAuthenticator extends Authenticator {
     
     static {
         try {
-            //username = null;
-            //password = null;
             Properties props = new Properties();
             props.load(TwitterWhatAreYouDoingServiceAuthenticator.class.getResourceAsStream(PROP_FILE));
             username = props.getProperty("username");
@@ -39,21 +38,19 @@ public class TwitterWhatAreYouDoingServiceAuthenticator extends Authenticator {
     private static TwitterWhatAreYouDoingServiceAuthenticator singleton = new TwitterWhatAreYouDoingServiceAuthenticator();
     
     public static void login() throws IOException {
-
-        //System.out.println( username );
-        //System.out.println( password);
-
+        
         if (!isValidUsernamePassword()) {
+
             AuthDialog dlg = new AuthDialog(null, true);
             System.out.println( "username = " + dlg.getUserName());
             System.out.println( "password = " + dlg.getPassword());
-            if (1 == dlg.getStatus()) {
-                
+            if ( dlg.getStatus() == 1) {
                 username = dlg.getUserName();
                 password = dlg.getPassword();
             } 
 
             if (!isValidUsernamePassword()) {
+                
                 throw new IOException("Invalid username and password");
             }
         }
@@ -71,6 +68,7 @@ public class TwitterWhatAreYouDoingServiceAuthenticator extends Authenticator {
 
     @Override
     protected PasswordAuthentication getPasswordAuthentication() {
+        
         return new PasswordAuthentication(username, password.toCharArray());
     }
 }

@@ -214,14 +214,12 @@ public class AuthDialog extends javax.swing.JDialog {
 
     private void jButtonOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOKActionPerformed
         state = 1;
-
         if ( ( jTextFieldProxyIp.getText().trim().length() == 0 ) ||
                        ( jTextFieldPort.getText().trim().length() == 0 )){
                    JOptionPane.showMessageDialog(this, "Fill the blanks(server ip and port )");
                    return ;
         }
-
-
+        
         if (jCheckBoxSetProxy.isSelected()) {
 
               if ( ( jTextFieldUserLogin.getText().trim().length() == 0 ) ||
@@ -242,17 +240,18 @@ public class AuthDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonOKActionPerformed
 
     private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelActionPerformed
+
         setVisible(false);
     }//GEN-LAST:event_jButtonCancelActionPerformed
 
     private void jButtonSetProxyServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSetProxyServerActionPerformed
-        // TODO add your handling code here:
+        
         proxyPanelVisibility = ! proxyPanelVisibility;
         jPanelSetProxy.setVisible(proxyPanelVisibility);
     }//GEN-LAST:event_jButtonSetProxyServerActionPerformed
 
     private void jCheckBoxSetProxyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxSetProxyActionPerformed
-        // TODO add your handling code here:
+        
         jTextFieldProxyIp.setEnabled(jCheckBoxSetProxy.isSelected());
         jTextFieldPort.setEnabled(jCheckBoxSetProxy.isSelected());
         jTextFieldProxyLogin.setEnabled(jCheckBoxSetProxy.isSelected());
@@ -260,15 +259,17 @@ public class AuthDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_jCheckBoxSetProxyActionPerformed
 
     public String getUserName() {
+        
         return jTextFieldUserLogin.getText().trim();
     }
 
     public String getPassword() {
+        
         return new String(jPasswordFieldUserPassword.getPassword());
     }
 
     public int getStatus() {
-        return state;
+        return this.state;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

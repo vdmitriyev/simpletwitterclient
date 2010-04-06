@@ -1,14 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package twitterclient.utils;
 
 import java.util.Properties;
 
 /**
- *
+ * Singletone for the proxy connection.
+ * 
  * @author viktor
  */
 public class ProxySettings {
