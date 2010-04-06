@@ -46,6 +46,7 @@ public class Item extends javax.swing.JPanel implements ListCellRenderer {
         jLabelUserIcon.setText("Icon");
         jLabelUserIcon.setMaximumSize(new java.awt.Dimension(48, 48));
         jLabelUserIcon.setMinimumSize(new java.awt.Dimension(48, 48));
+        jLabelUserIcon.setPreferredSize(new java.awt.Dimension(48, 48));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -55,7 +56,7 @@ public class Item extends javax.swing.JPanel implements ListCellRenderer {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelUserIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabelUserIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
