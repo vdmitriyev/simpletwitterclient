@@ -38,7 +38,7 @@ public class TwitterJFrame extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
      
         initComponents();
-        //setProxy();
+        setProxy();
         initUserInfo();
         getTwitsFromTwitter();        
     }
@@ -53,7 +53,7 @@ public class TwitterJFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jButtonUpdate = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelUserIcon = new javax.swing.JLabel();
         jTextFieldStatus = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
@@ -71,9 +71,9 @@ public class TwitterJFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setLabelFor(jTextFieldStatus);
-        jLabel1.setText("Icon");
-        jLabel1.setPreferredSize(new java.awt.Dimension(48, 48));
+        jLabelUserIcon.setLabelFor(jTextFieldStatus);
+        jLabelUserIcon.setText("Icon");
+        jLabelUserIcon.setPreferredSize(new java.awt.Dimension(48, 48));
 
         jTextFieldStatus.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         jTextFieldStatus.setText("Status");
@@ -99,11 +99,11 @@ public class TwitterJFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabelUserIcon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldStatus, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
+                        .addComponent(jTextFieldStatus, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelTextLength, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -117,7 +117,7 @@ public class TwitterJFrame extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelUserIcon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldStatus, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabelTextLength, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
@@ -171,16 +171,6 @@ public class TwitterJFrame extends javax.swing.JFrame {
         System.getProperties().put("proxySet", "true");
         System.getProperties().put("proxyPort", "3128");
         System.getProperties().put("proxyHost", "10.8.1.6");
-        /*
-        try{
-        URL validateURL = new URL("www.google.com");
-        URLConnection connection = validateURL.openConnection();
-        //Do some thing with the connection
-        System.out.println("vfdvfdvfd");
-        } catch(Exception e){
-        //Show the Exception
-        }
-         */
     }
 
     /**
@@ -212,7 +202,7 @@ public class TwitterJFrame extends javax.swing.JFrame {
                 String iconSrc = user.getProfileImageUrl();
                 URL iconUrl = new URL(iconSrc);
                 ImageIcon icon = new ImageIcon(iconUrl, user.getScreenName());
-                jLabel1.setIcon(icon);
+                jLabelUserIcon.setIcon(icon);
 
             }
 
@@ -286,8 +276,8 @@ public class TwitterJFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonUpdate;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelTextLength;
+    private javax.swing.JLabel jLabelUserIcon;
     private javax.swing.JList jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextFieldStatus;
