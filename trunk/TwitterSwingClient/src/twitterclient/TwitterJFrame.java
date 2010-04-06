@@ -25,6 +25,8 @@ import twitterclient.utils.*;
 public class TwitterJFrame extends javax.swing.JFrame {
 
     private DefaultListModel statuses = new DefaultListModel();
+    private DefaultListModel clientStatuses = new DefaultListModel();
+    
     private final int MAX_INPUT_LENGTH  = 140;
 
     /** Creates new form TwitterJFrame */
@@ -32,9 +34,9 @@ public class TwitterJFrame extends javax.swing.JFrame {
 
         this.setLocationRelativeTo(null);     
         initComponents();
-        setProxy();
         initUserInfo();
-        getTwitsFromTwitter();        
+        getTwitsFromTwitter();
+       
     }
 
     /** This method is called from within the constructor to
@@ -48,10 +50,14 @@ public class TwitterJFrame extends javax.swing.JFrame {
 
         jButtonUpdate = new javax.swing.JButton();
         jLabelUserIcon = new javax.swing.JLabel();
-        jTextFieldStatus = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
         jLabelTextLength = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextAreaUserStatus = new javax.swing.JTextArea();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jListAllTwits = new javax.swing.JList();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jListYourTwits = new javax.swing.JList();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Simple twitter RESTfull client");
@@ -65,60 +71,78 @@ public class TwitterJFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabelUserIcon.setLabelFor(jTextFieldStatus);
         jLabelUserIcon.setText("Icon");
         jLabelUserIcon.setPreferredSize(new java.awt.Dimension(48, 48));
-
-        jTextFieldStatus.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        jTextFieldStatus.setText("Status");
-        jTextFieldStatus.setNextFocusableComponent(jButtonUpdate);
-        jTextFieldStatus.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextFieldStatusKeyTyped(evt);
-            }
-        });
-
-        jList1.setModel(statuses);
-        jList1.setCellRenderer(new Item());
-        jScrollPane1.setViewportView(jList1);
 
         jLabelTextLength.setForeground(new java.awt.Color(0, 0, 204));
         jLabelTextLength.setText("140");
         jLabelTextLength.setName("lblTextCount"); // NOI18N
 
+        jTextAreaUserStatus.setColumns(20);
+        jTextAreaUserStatus.setLineWrap(true);
+        jTextAreaUserStatus.setRows(5);
+        jTextAreaUserStatus.setWrapStyleWord(true);
+        jTextAreaUserStatus.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextAreaUserStatusKeyPressed(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTextAreaUserStatus);
+
+        jTabbedPane1.setToolTipText("");
+
+        jListAllTwits.setModel(statuses);
+        jListAllTwits.setCellRenderer(new Item());
+        jScrollPane1.setViewportView(jListAllTwits);
+
+        jTabbedPane1.addTab("tab1", jScrollPane1);
+
+        jListYourTwits.setModel(clientStatuses);
+        jScrollPane3.setViewportView(jListYourTwits);
+
+        jTabbedPane1.addTab("tab2", jScrollPane3);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabelUserIcon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldStatus, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelTextLength, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonUpdate))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addComponent(jLabelTextLength, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonUpdate)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabelUserIcon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldStatus, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelTextLength, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonUpdate)))
-                .addContainerGap())
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabelUserIcon, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
+                            .addComponent(jLabelTextLength, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(16, 16, 16))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButtonUpdate)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())))
         );
+
+        jTabbedPane1.getAccessibleContext().setAccessibleName("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -127,7 +151,7 @@ public class TwitterJFrame extends javax.swing.JFrame {
 
         try {
 
-            String status = jTextFieldStatus.getText().trim();
+            String status = jTextAreaUserStatus.getText().trim();
             String inReplyToStatusId = null;
             String format1 = "xml";
 
@@ -137,38 +161,34 @@ public class TwitterJFrame extends javax.swing.JFrame {
             } else if (result1.getDataAsObject(twitter.whatareyoudoingservice.twitterresponse.NilClasses.class) instanceof twitter.whatareyoudoingservice.twitterresponse.NilClasses) {
                 twitter.whatareyoudoingservice.twitterresponse.NilClasses result1Obj = result1.getDataAsObject(twitter.whatareyoudoingservice.twitterresponse.NilClasses.class);
             }
-            //TODO - Uncomment the print Statement below to print result.
-            //System.out.println("The SaasService returned: "+result1.getDataAsString());
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         }
 
     }//GEN-LAST:event_jButtonUpdateActionPerformed
-    
-    private void jTextFieldStatusKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldStatusKeyTyped
-
-        jLabelTextLength.setText(String.valueOf(MAX_INPUT_LENGTH-jTextFieldStatus.getText().length()));
-        if (  (MAX_INPUT_LENGTH - jTextFieldStatus.getText().length()) < 0 ) {            
-            jLabelTextLength.setForeground(new java.awt.Color(204, 0, 0));
-            jButtonUpdate.setEnabled(false);
-        } else {
-            jLabelTextLength.setForeground(new java.awt.Color(0, 0, 204));
-            jButtonUpdate.setEnabled(true);
-        }
-        
-    }//GEN-LAST:event_jTextFieldStatusKeyTyped
 
     /**
-     *
+     * On chanhe ivent for controlling the user not to input more that 140 symbols.
+     * 
+     * @param evt
      */
-    private void setProxy() {
-        System.getProperties().put("proxySet", "true");
-        System.getProperties().put("proxyPort", "3128");
-        System.getProperties().put("proxyHost", "10.8.1.6");
-    }
+    private void jTextAreaUserStatusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextAreaUserStatusKeyPressed
+        
+        jLabelTextLength.setText(String.valueOf(MAX_INPUT_LENGTH - jTextAreaUserStatus.getText().length()));
+
+        if (  (MAX_INPUT_LENGTH - jTextAreaUserStatus.getText().length()) < 0 ) {
+                jLabelTextLength.setForeground(new java.awt.Color(204, 0, 0));
+                jButtonUpdate.setEnabled(false);
+        } else {
+                jLabelTextLength.setForeground(new java.awt.Color(0, 0, 204));
+                jButtonUpdate.setEnabled(true);
+        }
+
+    }//GEN-LAST:event_jTextAreaUserStatusKeyPressed
 
     /**
-     * Initializing user information
+     * Initializing user information.
      */
     private void initUserInfo() {
 
@@ -191,16 +211,13 @@ public class TwitterJFrame extends javax.swing.JFrame {
                 twitter.whatareyoudoingservice.twitterresponse.Statuses resultObj = result.getDataAsObject(twitter.whatareyoudoingservice.twitterresponse.Statuses.class);
 
                 StatusType st = resultObj.getStatus().get(0);
-                jTextFieldStatus.setText(st.getText().trim());
+                jTextAreaUserStatus.setText(st.getText().trim());
                 UserType user = st.getUser();
                 String iconSrc = user.getProfileImageUrl();
                 URL iconUrl = new URL(iconSrc);
                 ImageIcon icon = new ImageIcon(iconUrl, user.getScreenName());
                 jLabelUserIcon.setIcon(icon);
-
             }
-
-            //System.out.println("The SaasService returned: "+result.getDataAsString());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -211,7 +228,7 @@ public class TwitterJFrame extends javax.swing.JFrame {
         @Override
         public void run() {
 
-        try {
+            try {
                 String since2 = null;
                 String sinceId1 = null;
                 String page1 = null;
@@ -228,30 +245,42 @@ public class TwitterJFrame extends javax.swing.JFrame {
 
                 if (result2.getDataAsObject(twitter.whatareyoudoingservice.twitterresponse.Statuses.class) instanceof twitter.whatareyoudoingservice.twitterresponse.Statuses) {
 
-                        twitter.whatareyoudoingservice.twitterresponse.Statuses result2Obj = result2.getDataAsObject(twitter.whatareyoudoingservice.twitterresponse.Statuses.class);
-                        statuses.clear();
-                        for (final StatusType st : result2Obj.getStatus()) {
-                                  SwingUtilities.invokeLater(new Runnable() {
+                    twitter.whatareyoudoingservice.twitterresponse.Statuses result2Obj = result2.getDataAsObject(twitter.whatareyoudoingservice.twitterresponse.Statuses.class);
+                    statuses.clear();
+                    for (final StatusType st : result2Obj.getStatus()) {
+                          SwingUtilities.invokeLater(new Runnable() {
 
-                                      public void run() {
-                                               statuses.addElement(st);
-                                      }
-                                  });
-                         }
-
+                              public void run() {
+                                       statuses.addElement(st);
+                              }
+                          });
+                     }
                 }
-            } catch (Exception ex) {
+                
+             } catch (Exception ex) {
                 ex.printStackTrace();
-            }
+             }
         }
     }
+
     /**
-     *  Getting twits from twitter.
+     *  Getting twits of the client.
+     */
+    private void getClientsTwits() {
+
+    }
+
+    /**
+     *  Getting twits from twitter and adding them to the swing components.
      */
     private void getTwitsFromTwitter() {
 
+        // twits of the frieds
         Timer t = new Timer("Twitter Updater", false);
         t.scheduleAtFixedRate(new MyTime(), 1500, 75000);
+
+        //get twits of the client
+        getClientsTwits();
 
     }
 
@@ -259,12 +288,13 @@ public class TwitterJFrame extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
-
             public void run() {
                 new TwitterJFrame().setVisible(true);
             }
         });
+        
     }
 
 
@@ -272,8 +302,12 @@ public class TwitterJFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButtonUpdate;
     private javax.swing.JLabel jLabelTextLength;
     private javax.swing.JLabel jLabelUserIcon;
-    private javax.swing.JList jList1;
+    private javax.swing.JList jListAllTwits;
+    private javax.swing.JList jListYourTwits;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextFieldStatus;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextArea jTextAreaUserStatus;
     // End of variables declaration//GEN-END:variables
 }

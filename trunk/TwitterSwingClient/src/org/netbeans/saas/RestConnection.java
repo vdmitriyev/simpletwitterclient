@@ -31,7 +31,7 @@ public class RestConnection {
 
     static {
         //set the identification of the client
-        System.setProperty("http.agent", System.getProperty("user.name") + " (from NetBeans IDE)");
+        System.setProperty("http.agent", System.getProperty("user.name") + " (from simple swing client)");
     }
 
     private HttpURLConnection conn;
@@ -186,7 +186,7 @@ public class RestConnection {
             
             return response;
         } catch (Exception e) {
-            String errMsg = "Cannot connect to :" + conn.getURL();
+            String errMsg = "Cannot connect to : " + conn.getURL();
             try {
                 BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
                 String line;
