@@ -11,20 +11,10 @@ import javax.swing.ListCellRenderer;
 import twitter.whatareyoudoingservice.twitterresponse.StatusType;
 import twitter.whatareyoudoingservice.twitterresponse.UserType;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * Item.java
- *
- * Created on 01.04.2010, 15:34:49
- */
-
 /**
+ * Item for the each twit.
  *
- * @author viktor
+ * @author Viktor Dmitriyev
  */
 public class Item extends javax.swing.JPanel implements ListCellRenderer {
 

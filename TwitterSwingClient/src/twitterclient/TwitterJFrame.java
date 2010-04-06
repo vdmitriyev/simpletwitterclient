@@ -1,9 +1,4 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
  * TwitterJFrame.java
  *
  * Created on 01.04.2010, 13:41:15
@@ -35,8 +30,7 @@ public class TwitterJFrame extends javax.swing.JFrame {
     /** Creates new form TwitterJFrame */
     public TwitterJFrame() {
 
-        this.setLocationRelativeTo(null);
-     
+        this.setLocationRelativeTo(null);     
         initComponents();
         setProxy();
         initUserInfo();
