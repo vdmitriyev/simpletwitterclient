@@ -1,24 +1,18 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * AuthDialog.java
- *
- * Created on Feb 3, 2009, 12:14:29 PM
- */
-
 package twitterclient;
 
+import javax.swing.JOptionPane;
+import twitterclient.utils.*;
+
+
 /**
+ * Class for the authentification to the twitter.
  *
- * @author lukas
+ * @author Viktor Dmitriyev
  */
 public class AuthDialog extends javax.swing.JDialog {
 
     private int state = 0;
-
+    private boolean proxyPanelVisibility = false;
     private static AuthDialog dlg;
 
     /** Creates new form AuthDialog */
@@ -27,7 +21,8 @@ public class AuthDialog extends javax.swing.JDialog {
         initComponents();
         //this.setLocationRelativeTo(getRootPane());
         this.setLocationRelativeTo(null);
-        this.setVisible(modal);
+        jPanelSetProxy.setVisible(false);
+        this.setVisible(modal);        
     }
 
     /** This method is called from within the constructor to
@@ -41,10 +36,21 @@ public class AuthDialog extends javax.swing.JDialog {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        jTextFieldUserLogin = new javax.swing.JTextField();
+        jPasswordFieldUserPassword = new javax.swing.JPasswordField();
         jButtonCancel = new javax.swing.JButton();
         jButtonOK = new javax.swing.JButton();
+        jPanelSetProxy = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jTextFieldProxyIp = new javax.swing.JTextField();
+        jTextFieldPort = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jCheckBoxSetProxy = new javax.swing.JCheckBox();
+        jTextFieldProxyLogin = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jPasswordFieldProxyPassword = new javax.swing.JPasswordField();
+        jButtonSetProxyServer = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Simple twitter client : LOGIN/PASSWORD");
@@ -67,25 +73,119 @@ public class AuthDialog extends javax.swing.JDialog {
             }
         });
 
+        jPanelSetProxy.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
+        jLabel3.setText("Proxy server");
+
+        jTextFieldProxyIp.setText("proxy.iitu.kz");
+        jTextFieldProxyIp.setEnabled(false);
+
+        jTextFieldPort.setText("3128");
+        jTextFieldPort.setEnabled(false);
+
+        jLabel4.setText("port");
+
+        jCheckBoxSetProxy.setText("Set proxy");
+        jCheckBoxSetProxy.setMargin(new java.awt.Insets(2, 0, 2, 2));
+        jCheckBoxSetProxy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxSetProxyActionPerformed(evt);
+            }
+        });
+
+        jTextFieldProxyLogin.setEnabled(false);
+
+        jLabel5.setText("Login");
+
+        jLabel6.setText("Password");
+
+        jPasswordFieldProxyPassword.setEnabled(false);
+
+        javax.swing.GroupLayout jPanelSetProxyLayout = new javax.swing.GroupLayout(jPanelSetProxy);
+        jPanelSetProxy.setLayout(jPanelSetProxyLayout);
+        jPanelSetProxyLayout.setHorizontalGroup(
+            jPanelSetProxyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelSetProxyLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelSetProxyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelSetProxyLayout.createSequentialGroup()
+                        .addComponent(jCheckBoxSetProxy)
+                        .addContainerGap(279, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelSetProxyLayout.createSequentialGroup()
+                        .addGroup(jPanelSetProxyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelSetProxyLayout.createSequentialGroup()
+                                .addGroup(jPanelSetProxyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel5))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanelSetProxyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jTextFieldProxyLogin, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                                    .addComponent(jTextFieldProxyIp, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                                    .addComponent(jPasswordFieldProxyPassword, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldPort))
+                            .addGroup(jPanelSetProxyLayout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 211, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(93, 93, 93))))
+        );
+        jPanelSetProxyLayout.setVerticalGroup(
+            jPanelSetProxyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelSetProxyLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jCheckBoxSetProxy, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addGroup(jPanelSetProxyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jTextFieldProxyIp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(jTextFieldPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelSetProxyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jTextFieldProxyLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelSetProxyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jPasswordFieldProxyPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        jButtonSetProxyServer.setText("Set proxy");
+        jButtonSetProxyServer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSetProxyServerActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanelSetProxy, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButtonOK, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jPasswordFieldUserPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
+                                    .addComponent(jTextFieldUserLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButtonSetProxyServer)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonOK, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -94,16 +194,19 @@ public class AuthDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldUserLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPasswordFieldUserPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonCancel)
-                    .addComponent(jButtonOK))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButtonOK)
+                    .addComponent(jButtonSetProxyServer))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanelSetProxy, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -111,6 +214,30 @@ public class AuthDialog extends javax.swing.JDialog {
 
     private void jButtonOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOKActionPerformed
         state = 1;
+
+        if ( ( jTextFieldProxyIp.getText().trim().length() == 0 ) ||
+                       ( jTextFieldPort.getText().trim().length() == 0 )){
+                   JOptionPane.showMessageDialog(this, "Fill the blanks(server ip and port )");
+                   return ;
+        }
+
+
+        if (jCheckBoxSetProxy.isSelected()) {
+
+              if ( ( jTextFieldUserLogin.getText().trim().length() == 0 ) ||
+                       ( jPasswordFieldUserPassword.getText().trim().length() == 0 )){
+                   JOptionPane.showMessageDialog(this, "Fill the login and the password fields.");
+                   return ;
+               }
+
+               ProxySettings p = ProxySettings.getSingletoneInstance();              
+               p.setProxy( jTextFieldProxyIp.getText().trim(),
+                           jTextFieldPort.getText().trim(),
+                           jTextFieldProxyLogin.getText().trim(),
+                           String.valueOf(jPasswordFieldProxyPassword.getPassword()));
+            
+        }
+
         setVisible(false);
     }//GEN-LAST:event_jButtonOKActionPerformed
 
@@ -118,12 +245,26 @@ public class AuthDialog extends javax.swing.JDialog {
         setVisible(false);
     }//GEN-LAST:event_jButtonCancelActionPerformed
 
+    private void jButtonSetProxyServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSetProxyServerActionPerformed
+        // TODO add your handling code here:
+        proxyPanelVisibility = ! proxyPanelVisibility;
+        jPanelSetProxy.setVisible(proxyPanelVisibility);
+    }//GEN-LAST:event_jButtonSetProxyServerActionPerformed
+
+    private void jCheckBoxSetProxyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxSetProxyActionPerformed
+        // TODO add your handling code here:
+        jTextFieldProxyIp.setEnabled(jCheckBoxSetProxy.isSelected());
+        jTextFieldPort.setEnabled(jCheckBoxSetProxy.isSelected());
+        jTextFieldProxyLogin.setEnabled(jCheckBoxSetProxy.isSelected());
+        jPasswordFieldProxyPassword.setEnabled(jCheckBoxSetProxy.isSelected());
+    }//GEN-LAST:event_jCheckBoxSetProxyActionPerformed
+
     public String getUserName() {
-        return jTextField1.getText().trim();
+        return jTextFieldUserLogin.getText().trim();
     }
 
     public String getPassword() {
-        return new String(jPasswordField1.getPassword());
+        return new String(jPasswordFieldUserPassword.getPassword());
     }
 
     public int getStatus() {
@@ -133,10 +274,21 @@ public class AuthDialog extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCancel;
     private javax.swing.JButton jButtonOK;
+    private javax.swing.JButton jButtonSetProxyServer;
+    private javax.swing.JCheckBox jCheckBoxSetProxy;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanelSetProxy;
+    private javax.swing.JPasswordField jPasswordFieldProxyPassword;
+    private javax.swing.JPasswordField jPasswordFieldUserPassword;
+    private javax.swing.JTextField jTextFieldPort;
+    private javax.swing.JTextField jTextFieldProxyIp;
+    private javax.swing.JTextField jTextFieldProxyLogin;
+    private javax.swing.JTextField jTextFieldUserLogin;
     // End of variables declaration//GEN-END:variables
 
 }
